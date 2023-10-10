@@ -14,6 +14,7 @@ import { Store } from '../Store';
 import { getError } from '../components/utils';
 import { toast } from 'react-toastify';
 
+
 function reducer(state, action) {
   switch (action.type) {
     case 'FETCH_REQUEST':
@@ -96,6 +97,7 @@ function onError(err) {
     const fetchOrder = async () => {
       try {
         dispatch({ type: 'FETCH_REQUEST' });
+        console.log(orderId);
         const { data } = await axios.get(`/api/orders/${orderId}`, {
           headers: { authorization: `Bearer ${userInfo.token}` },
         });
@@ -106,7 +108,7 @@ function onError(err) {
     };
 
     if (!userInfo) {
-      return navigate('/signin');
+      return navigate('/login');
     }
     if (!order._id || successPay || (order._id && order._id !== orderId)) {
       fetchOrder();
